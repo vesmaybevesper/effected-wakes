@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "uwu.serenya.effectedwakes.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "SplashSpawnerMixin",
+    "WakeRendererAccessor",
+    "WakeRendererMixin",
+    "WakesUtilsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,47 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "uwu.serenya",
+		"id": "effectedwakes",
+		"version": "${version}",
+		"metadata": {
+			"name": "Effected Wakes",
+			"description": "A mod to make Effective and Wakes work together more elegantly",
+			"contributors": {
+				"The Sappho Company": "Org"
+			},
+			"contact": {
+				"homepage": "https://codeberg.org/sappho",
+				"sources": "https://codeberg.org/sappho/Java_QuiltTemplate"
+			},
+			"icon": "assets/effectedwakes/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"client_init": "uwu.serenya.effectedwakes.EffectedWakes"
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.23.0"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=7.4.0"
+			},
+			{
+				"id": "minecraft",
+				"versions": ">=1.20.1"
+			},
+			{
+				"id": "effective",
+				"versions": ">=2.2.0"
+			},
+			{
+				"id": "wakes",
+				"versions": ">=0.2.2"
+			}
+		]
+	},
+	"mixin": "effectedwakes.mixins.json"
+}

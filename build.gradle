@@ -1,0 +1,119 @@
+plugins {
+	id 'maven-publish'
+	id 'org.quiltmc.loom' version '1.4.2'
+}
+
+base {
+	archivesName = project.archives_base_name
+}
+
+version = project.version
+group = project.maven_group
+
+repositories {
+
+	mavenCentral()
+
+	maven {
+		name = 'Quilt'
+		url = "https://maven.quiltmc.org/repository/release/"
+	}
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
+	}
+
+	maven {
+		name = "JitPack"
+		url = "https://jitpack.io/"
+	}
+
+	maven {
+		name = "Ladysnake"
+		url = "https://maven.ladysnake.org/releases"
+	}
+
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+	}
+
+	maven {
+		name = 'Xander Maven'
+		url = 'https://maven.isxander.dev/releases'
+	}
+
+
+}
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings("org.quiltmc:quilt-mappings:${project.minecraft_version}+build.${project.qm_version}:intermediary-v2")
+
+	modImplementation "org.quiltmc:quilt-loader:${project.loader_version}"
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${project.quilted_fabric_api}"
+
+	//Dependencies
+	modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}") { // YACL
+		exclude(group: "com.twelvemonkeys.common")
+		exclude(group: "com.twelvemonkeys.imageio")
+		exclude(group: "net.fabricmc")
+	}
+	modImplementation "org.ladysnake:effective:${effective_version}+${minecraft_version}"   // Effective
+	modImplementation ("maven.modrinth:wakes:${wakes_version}"){
+		exclude(group: "net.fabricmc")
+	} // Wakes
+
+	include(implementation("blue.endless:jankson:1.2.2"))
+
+	include(implementation("com.github.jdiemke.delaunay-triangulator:DelaunayTriangulator:1.0.0"))
+
+	// MixinSquared
+	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.2-beta.4")))
+}
+
+processResources {
+	inputs.property 'version', project.version
+
+	filesMatching('quilt.mod.json') {
+		expand 'version': project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 17
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+	from('LICENSE') {
+		rename { "${it}_${base.archivesName.get()}" }
+	}
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			name "sapphoCompany"
+			url "https://maven.is-immensely.gay/nightly"
+			credentials(org.gradle.api.credentials.PasswordCredentials)
+			authentication {
+				basic(BasicAuthentication)
+			}
+		}
+	}
+}

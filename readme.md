@@ -1,3 +1,5 @@
+Fork of https://codeberg.org/sery/effected-wakes to port to fabric and backport to 1.20.1
+
 # Effected Wakes
 A mod to make effective and wakes work together better.
 Features:
